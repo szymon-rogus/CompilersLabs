@@ -72,12 +72,18 @@ reserved = {
 }
 
 
-FUNCTIONS = ['ID', 'INT', 'FLOAT']
+FUNCTIONS = ['ID', 'FLOAT', 'INT', 'STRING']
 
 
 def t_ID(t):
     r'[a-zA-Z_]\w*'
     t.type = reserved.get(t.value, 'ID')
+    return t
+
+
+def t_FLOAT(t):
+    r'(\d*\.\d+E?\d*)|(\d+\.\d*E?\d*)'
+    t.value = float(t.value)
     return t
 
 
@@ -87,16 +93,7 @@ def t_INT(t):
     return t
 
 
-def t_FLOAT(t):
-    r'\d+\.\d+'
-    t.value = float(t.value)
-    return t
-
-
-# def t_STRING(t):
-#     r'\'[\w\W]*\''  # case => ""
-#     t.value = str(t.value)
-#     return t
+t_STRING = r'\".*?\"'
 
 
 COMMENT = ['COMMENT']
