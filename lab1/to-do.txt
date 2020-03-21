@@ -1,0 +1,2 @@
+string detecting
+float vs int detecting

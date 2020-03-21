@@ -2,7 +2,10 @@ import ply.lex as lex
 from itertools import chain
 
 BINARY_OPERATORS = ['PLUS',  'MINUS',  'TIMES',  'DIVIDE']
-binary_literals = ['+', '-', '*', '/']
+t_PLUS = r'\+'
+t_MINUS = r'-'
+t_TIMES = r'\*'
+t_DIVIDE = r'/'
 
 
 MATRICES_OPERATORS = ['MPLUS',  'MMINUS',  'MTIMES',  'MDIVIDE']
@@ -13,12 +16,12 @@ t_MDIVIDE = r'./'
 
 
 BRACKETS = ['LBRACKET', 'RBRACKET', 'LSQUARE', 'RSQUARE', 'LBRACE', 'RBRACE']
-# bracket_literals = [r'\(', r'\)', r'\[', r'\]', r'\{', r'\}']
 t_LBRACKET = r'\('
 t_RBRACKET = r'\)'
 t_LSQUARE = r'\['
 t_RSQUARE = r'\]'
 t_LBRACE = r'\{'
+t_RBRACE = r'\}'
 
 
 RANGE_OPERATOR = ['RANGE']
@@ -50,7 +53,7 @@ t_GREATER = r'>'
 t_LESSER_EQUALS = r'<='
 t_GREATER_EQUALS = r'>='
 t_NOT_EQUALS = r'!='
-t_EQUALS = r'=='
+t_EQUALS = r'\=='
 
 
 reserved = {
@@ -69,7 +72,7 @@ reserved = {
 }
 
 
-FUNCTIONS = ['ID', 'INT', 'FLOAT', 'STRING']
+FUNCTIONS = ['ID', 'INT', 'FLOAT']
 
 
 def t_ID(t):
@@ -90,10 +93,10 @@ def t_FLOAT(t):
     return t
 
 
-def t_STRING(t):
-    r'\'[\w\W]*\''  # case => ""
-    t.value = str(t.value)
-    return t
+# def t_STRING(t):
+#     r'\'[\w\W]*\''  # case => ""
+#     t.value = str(t.value)
+#     return t
 
 
 COMMENT = ['COMMENT']
@@ -120,7 +123,7 @@ def t_error(t):
     t.lexer.skip(1)
 
 
-t_ignore = '  \t'  # case => #
+t_ignore = '  \t'
 
 
 lexer = lex.lex()
