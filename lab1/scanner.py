@@ -37,22 +37,10 @@ COMMA_SEMICOLON_OPERATORS = ['COMMA', 'SEMICOLON']
 t_COMMA = r','
 t_SEMICOLON = r';'
 
-
-def t_ID(t):
-    r'[a-zA-Z_]\w*'
-    return t
-
-
-def t_NUMBER(t):
-    r'\d+'
-    t.value = int(t.value)
-    return t
-
-
-t_ignore = '  \t \n'
-
-assign_tokens = ( 'ASSIGN', 'ADD_ASSIGN', 'SUBSTRACT_ASSIGN', 'MULTIPLY_ASSIGN', 'DIVIDE_ASSIGN')
-relation_tokens = ('LESSER', 'GREATER', 'LESSER_EQUALS', 'GREATER_EQUALS', 'NOT_EQUALS', 'EQUALS')
+assign_tokens = ['ASSIGN', 'ADD_ASSIGN',
+                 'SUBSTRACT_ASSIGN', 'MULTIPLY_ASSIGN', 'DIVIDE_ASSIGN']
+relation_tokens = ['LESSER', 'GREATER', 'LESSER_EQUALS',
+                   'GREATER_EQUALS', 'NOT_EQUALS', 'EQUALS']
 
 t_ASSIGN = r'\='
 t_ADD_ADDIGN = r'\+='
@@ -69,16 +57,46 @@ t_EQUALS = r'=='
 
 
 reserved = {
-    'if'    : 'IF',
-    'then'  : 'THEN',
-    'else'  : 'ELSE',
-    'while' : 'WHILE',
-    'for'   : 'FOR',
-    'break' : 'BREAK',
-    'continue' : 'CONTINUE',
-    'return' : 'RETURN',
-    'eye' : 'EYE',
-    'zeros' : 'ZEROS',
-    'ones' : 'ONES',
-    'print' : 'PRINT',
+    'if': 'IF',
+    'then': 'THEN',
+    'else': 'ELSE',
+    'while': 'WHILE',
+    'for': 'FOR',
+    'break': 'BREAK',
+    'continue': 'CONTINUE',
+    'return': 'RETURN',
+    'eye': 'EYE',
+    'zeros': 'ZEROS',
+    'ones': 'ONES',
+    'print': 'PRINT',
 }
+
+
+FUNCTIONS = ['ID', 'INT', 'FLOAT', 'STRING']
+
+
+def t_ID(t):
+    r'[a-zA-Z_]\w*'
+    t.type = reserved.get(t.value, 'ID')
+    return t
+
+
+def t_INT(t):
+    r'\d+'
+    t.value = int(t.value)
+    return t
+
+
+def t_FLOAT(t):
+    r'\d+\.\d+'
+    t.value = float(t.value)
+    return t
+
+
+def t_STRING(t):
+    r'\'[\w\W]*\''  # case => ""
+    t.value = str(t.value)
+    return t
+
+
+t_ignore = '  \t\n'  # case => #
