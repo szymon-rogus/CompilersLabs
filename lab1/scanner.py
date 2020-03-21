@@ -13,7 +13,12 @@ t_MDIVIDE = r'./'
 
 
 BRACKETS = ['LBRACKET', 'RBRACKET', 'LSQUARE', 'RSQUARE', 'LBRACE', 'RBRACE']
-bracket_literals = ['(', ')', '[', ']', '{', '}']
+# bracket_literals = [r'\(', r'\)', r'\[', r'\]', r'\{', r'\}']
+t_LBRACKET = r'\('
+t_RBRACKET = r'\)'
+t_LSQUARE = r'\['
+t_RSQUARE = r'\]'
+t_LBRACE = r'\{'
 
 
 RANGE_OPERATOR = ['RANGE']
