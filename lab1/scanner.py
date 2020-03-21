@@ -1,4 +1,5 @@
 import ply.lex as lex
+from itertools import chain
 
 BINARY_OPERATORS = ['PLUS',  'MINUS',  'TIMES',  'DIVIDE']
 binary_literals = ['+', '-', '*', '/']
@@ -37,10 +38,10 @@ COMMA_SEMICOLON_OPERATORS = ['COMMA', 'SEMICOLON']
 t_COMMA = r','
 t_SEMICOLON = r';'
 
-assign_tokens = ['ASSIGN', 'ADD_ASSIGN',
-                 'SUBSTRACT_ASSIGN', 'MULTIPLY_ASSIGN', 'DIVIDE_ASSIGN']
-relation_tokens = ['LESSER', 'GREATER', 'LESSER_EQUALS',
-                   'GREATER_EQUALS', 'NOT_EQUALS', 'EQUALS']
+ASSIGN_OPERATORS = ['ASSIGN', 'ADD_ASSIGN',
+                    'SUBSTRACT_ASSIGN', 'MULTIPLY_ASSIGN', 'DIVIDE_ASSIGN']
+RELATIONAL_OPERATORS = ['LESSER', 'GREATER', 'LESSER_EQUALS',
+                        'GREATER_EQUALS', 'NOT_EQUALS', 'EQUALS']
 
 t_ASSIGN = r'\='
 t_ADD_ADDIGN = r'\+='
@@ -99,4 +100,11 @@ def t_STRING(t):
     return t
 
 
+list_of_tokenlist = [BINARY_OPERATORS, MATRICES_OPERATORS, BRACKETS, RANGE_OPERATOR,
+                     TRANSPOSITION_OPERATOR, COMMA_SEMICOLON_OPERATORS, ASSIGN_OPERATORS, RELATIONAL_OPERATORS]
+chain_object = chain.from_iterable(list_of_tokenlist)
+tokens = list(chain_object) + list(reserved.keys())
 t_ignore = '  \t\n'  # case => #
+
+
+lexer = lex.lex()
