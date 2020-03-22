@@ -1,1 +1,1 @@
-This exercise was about to make simple text analyzer (using PLY parser generatorin python) for matrix operations. 
+This exercise was about to make simple text analyzer (using PLY parser generator in python) for matrix operations. 
