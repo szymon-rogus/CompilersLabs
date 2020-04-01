@@ -9,10 +9,10 @@ t_DIVIDE = r'/'
 
 
 MATRICES_OPERATORS = ['MPLUS',  'MMINUS',  'MTIMES',  'MDIVIDE']
-t_MPLUS = r'.\+'
-t_MMINUS = r'.-'
-t_MTIMES = r'.\*'
-t_MDIVIDE = r'./'
+t_MPLUS = r'\.\+'
+t_MMINUS = r'\.-'
+t_MTIMES = r'\.\*'
+t_MDIVIDE = r'\./'
 
 
 BRACKETS = ['LBRACKET', 'RBRACKET', 'LSQUARE', 'RSQUARE', 'LBRACE', 'RBRACE']
