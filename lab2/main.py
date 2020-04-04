@@ -14,6 +14,6 @@ if __name__ == '__main__':
     text = file.read()
     parser = Parser()
     res = parser.parse(text)
-    if parser.error or not parser.parser.errorok:
+    if parser.error:
         sys.exit(1)
     print(res)
