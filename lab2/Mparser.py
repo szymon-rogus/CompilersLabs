@@ -1,17 +1,19 @@
 import ply.yacc as yacc
 import scanner
+import numpy
 
 tokens = scanner.tokens
 
 precedence = (
     # to fill ...
     ("nonassoc", 'LESSER', 'GREATER', 'LESSER_EQUALS', 'GREATER_EQUALS', 'NOT_EQUALS', 'EQUALS'),
-    #("noassoc", 'MINUS'),
     ("right", 'ASSIGN', 'ADD_ASSIGN', 'SUBSTRACT_ASSIGN', 'MULTIPLY_ASSIGN', 'DIVIDE_ASSIGN'),
     ("left", 'PLUS', 'MINUS', 'MPLUS', 'MMINUS'),
     ("left", 'TIMES', 'DIVIDE', 'MTIMES', 'MDIVIDE'),
     ("noassoc", 'ZEROS', 'ONES', 'EYE'),
-    ("noassoc", 'LBRACE', 'RBRACE', 'LBRACKET', 'RBRACKET')
+    ("noassoc", 'LBRACE', 'RBRACE', 'LBRACKET', 'RBRACKET'),
+    ("right", 'UMINUS'),
+    ("nonassoc", 'TRANSPOSITION')
     # to fill ...
 )
 
@@ -69,7 +71,6 @@ def p_expression_mul(p):
         pass
 
 
-
 def p_expression_assignment(p):
     """EXPRESSION : EXPRESSION ASSIGN EXPRESSION
                   | EXPRESSION ADD_ASSIGN EXPRESSION
@@ -91,20 +92,22 @@ def p_expression_assignment(p):
 
 
 def p_expression_relational(p):
-    """ comparison_operator : LESSER
-                            | GREATER
-                            | LESSER_EQUALS
-                            | GREATER_EQUALS
-                            | NOT_EQUALS
-                            | EQUALS"""
+    """ EXPRESSION : LESSER
+                   | GREATER
+                   | LESSER_EQUALS
+                   | GREATER_EQUALS
+                   | NOT_EQUALS
+                   | EQUALS"""
     p[0] = p[1]
 
 
-#TODO
-#def p_unary_negation(p):
-#    """unary_negation : MINUS"""
-#    p[0] = -p[1]
+def p_unary_negation(p):
+    """EXPRESSION : MINUS EXPRESSION %prec UMINUS"""
+    p[0] = -p[2]
 
+def p_matrix_transpose(p):
+    """ EXPRESSION : EXPRESSION TRANSPOSITION """
+    p[0] = p[2].transpose(1, 0)
 
 def p_error(p):
     if p:
