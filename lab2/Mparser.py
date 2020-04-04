@@ -5,11 +5,11 @@ tokens = scanner.tokens
 
 precedence = (
     # to fill ...
-    ("right", 'ASSIGN'),
+    ("right", 'ASSIGN', 'ADD_ASSIGN', 'SUBSTRACT_ASSIGN', 'MULTIPLY_ASSIGN', 'DIVIDE_ASSIGN'),
     ("left", 'PLUS', 'MINUS'),
-    # ("left", '.+', '.-'),
+    ("left", 'MPLUS', 'MMINUS'),
     ("left", 'TIMES', 'DIVIDE'),
-    # ("left", '.*', './'),
+    ("left", 'MTIMES', 'MDIVIDE'),
     # to fill ...
 )
 
@@ -25,6 +25,7 @@ def p_error(p):
 def p_program(p):
     """PROGRAM : EXPRESSION"""
     print("RESULT =", p[1])
+
 
 def p_expression_brackets(p):
     """EXPRESSION : LBRACKET EXPRESSION RBRACKET"""
@@ -50,25 +51,48 @@ def p_expression_id(p):
 
 def p_expression_sum(p):
     """EXPRESSION : EXPRESSION PLUS EXPRESSION
-                  | EXPRESSION MINUS EXPRESSION"""
+                  | EXPRESSION MINUS EXPRESSION
+                  | EXPRESSION MPLUS EXPRESSION
+                  | EXPRESSION MMINUS EXPRESSION"""
     if p[2] == '+':
         p[0] = p[1] + p[3]
     elif p[2] == '-':
+        p[0] = p[1] - p[3]
+    elif p[2] == '.+':
+        p[0] = p[1] - p[3]
+    elif p[2] == '.-':
         p[0] = p[1] - p[3]
 
 
 def p_expression_mul(p):
     """EXPRESSION : EXPRESSION TIMES EXPRESSION
-                  | EXPRESSION DIVIDE EXPRESSION"""
+                  | EXPRESSION DIVIDE EXPRESSION
+                  | EXPRESSION MTIMES EXPRESSION
+                  | EXPRESSION MDIVIDE EXPRESSION"""
     if p[2] == '*':
         p[0] = p[1] * p[3]
     elif p[2] == '/':
         p[0] = p[1] / p[3]
+    #TODO macierze
 
 def p_expression_assignment(p):
-    """EXPRESSION : EXPRESSION ASSIGN EXPRESSION"""
-    p[0] = p[3]
-    symbols_dict[p[1]] = p[3]
+    """EXPRESSION : EXPRESSION ASSIGN EXPRESSION
+                  | EXPRESSION ADD_ASSIGN EXPRESSION
+                  | EXPRESSION SUBSTRACT_ASSIGN EXPRESSION
+                  | EXPRESSION MULTIPLY_ASSIGN EXPRESSION
+                  | EXPRESSION DIVIDE_ASSIGN EXPRESSION"""
+    if p[2] == '=':
+        p[0] = p[3]
+    elif p[2] == '+=':
+        p[0] += p[3]
+    elif p[2] == '-=':
+        p[0] -= p[3]
+    elif p[2] == '*=':
+        p[0] *= p[3]
+    elif p[2] == '/=':
+        p[0] /= p[3]
+
+    symbols_dict[p[1]] = p[0]
 
 
 # def p_instructions_1(p):
