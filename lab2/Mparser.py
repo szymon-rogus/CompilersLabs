@@ -6,12 +6,12 @@ tokens = scanner.tokens
 precedence = (
     # to fill ...
     ("nonassoc", 'LESSER', 'GREATER', 'LESSER_EQUALS', 'GREATER_EQUALS', 'NOT_EQUALS', 'EQUALS'),
-    #("noassoc", 'MINUS'),
     ("right", 'ASSIGN', 'ADD_ASSIGN', 'SUBSTRACT_ASSIGN', 'MULTIPLY_ASSIGN', 'DIVIDE_ASSIGN'),
     ("left", 'PLUS', 'MINUS'),
     ("left", 'MPLUS', 'MMINUS'),
     ("left", 'TIMES', 'DIVIDE'),
     ("left", 'MTIMES', 'MDIVIDE'),
+    ("right", 'UMINUS'),
     # to fill ...
 )
 
@@ -101,10 +101,9 @@ def p_expression_relational(p):
     p[0] = p[1]
 
 
-#TODO
-#def p_unary_negation(p):
-#    """unary_negation : MINUS"""
-#    p[0] = -p[1]
+def p_unary_negation(p):
+    """unary_negation : MINUS expression %prec UMINUS"""
+    p[0] = -p[2]
 
 
 def p_error(p):
