@@ -92,17 +92,17 @@ def p_expression_assignment(p):
 
 
 def p_expression_relational(p):
-    """ comparison_operator : LESSER
-                            | GREATER
-                            | LESSER_EQUALS
-                            | GREATER_EQUALS
-                            | NOT_EQUALS
-                            | EQUALS"""
+    """ EXPRESSION : LESSER
+                   | GREATER
+                   | LESSER_EQUALS
+                   | GREATER_EQUALS
+                   | NOT_EQUALS
+                   | EQUALS"""
     p[0] = p[1]
 
 
 def p_unary_negation(p):
-    """unary_negation : MINUS expression %prec UMINUS"""
+    """EXPRESSION : MINUS EXPRESSION %prec UMINUS"""
     p[0] = -p[2]
 
 
