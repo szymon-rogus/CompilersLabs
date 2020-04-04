@@ -1,0 +1,328 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ADD_ASSIGN
+    BREAK
+    COMMA
+    COMMENT
+    CONTINUE
+    DIVIDE
+    DIVIDE_ASSIGN
+    ELSE
+    EQUALS
+    EYE
+    FOR
+    GREATER
+    GREATER_EQUALS
+    IF
+    LBRACE
+    LBRACKET
+    LESSER
+    LESSER_EQUALS
+    LSQUARE
+    MDIVIDE
+    MMINUS
+    MPLUS
+    MTIMES
+    MULTIPLY_ASSIGN
+    NOT_EQUALS
+    ONES
+    PRINT
+    RANGE
+    RBRACE
+    RBRACKET
+    RETURN
+    RSQUARE
+    SEMICOLON
+    STRING
+    SUBSTRACT_ASSIGN
+    THEN
+    TIMES
+    TRANSPOSITION
+    WHILE
+    ZEROS
+
+Grammar
+
+Rule 0     S' -> PROGRAM
+Rule 1     PROGRAM -> PROGRAM EXPRESSION
+Rule 2     PROGRAM -> EXPRESSION
+Rule 3     EXPRESSION -> INT
+Rule 4     EXPRESSION -> FLOAT
+Rule 5     EXPRESSION -> ID
+Rule 6     EXPRESSION -> EXPRESSION PLUS EXPRESSION
+Rule 7     EXPRESSION -> EXPRESSION MINUS EXPRESSION
+Rule 8     EXPRESSION -> EXPRESSION ASSIGN EXPRESSION
+
+Terminals, with rules where they appear
+
+ADD_ASSIGN           : 
+ASSIGN               : 8
+BREAK                : 
+COMMA                : 
+COMMENT              : 
+CONTINUE             : 
+DIVIDE               : 
+DIVIDE_ASSIGN        : 
+ELSE                 : 
+EQUALS               : 
+EYE                  : 
+FLOAT                : 4
+FOR                  : 
+GREATER              : 
+GREATER_EQUALS       : 
+ID                   : 5
+IF                   : 
+INT                  : 3
+LBRACE               : 
+LBRACKET             : 
+LESSER               : 
+LESSER_EQUALS        : 
+LSQUARE              : 
+MDIVIDE              : 
+MINUS                : 7
+MMINUS               : 
+MPLUS                : 
+MTIMES               : 
+MULTIPLY_ASSIGN      : 
+NOT_EQUALS           : 
+ONES                 : 
+PLUS                 : 6
+PRINT                : 
+RANGE                : 
+RBRACE               : 
+RBRACKET             : 
+RETURN               : 
+RSQUARE              : 
+SEMICOLON            : 
+STRING               : 
+SUBSTRACT_ASSIGN     : 
+THEN                 : 
+TIMES                : 
+TRANSPOSITION        : 
+WHILE                : 
+ZEROS                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+EXPRESSION           : 1 2 6 6 7 7 8 8
+PROGRAM              : 1 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . PROGRAM
+    (1) PROGRAM -> . PROGRAM EXPRESSION
+    (2) PROGRAM -> . EXPRESSION
+    (3) EXPRESSION -> . INT
+    (4) EXPRESSION -> . FLOAT
+    (5) EXPRESSION -> . ID
+    (6) EXPRESSION -> . EXPRESSION PLUS EXPRESSION
+    (7) EXPRESSION -> . EXPRESSION MINUS EXPRESSION
+    (8) EXPRESSION -> . EXPRESSION ASSIGN EXPRESSION
+
+    INT             shift and go to state 3
+    FLOAT           shift and go to state 4
+    ID              shift and go to state 5
+
+    PROGRAM                        shift and go to state 1
+    EXPRESSION                     shift and go to state 2
+
+state 1
+
+    (0) S' -> PROGRAM .
+    (1) PROGRAM -> PROGRAM . EXPRESSION
+    (3) EXPRESSION -> . INT
+    (4) EXPRESSION -> . FLOAT
+    (5) EXPRESSION -> . ID
+    (6) EXPRESSION -> . EXPRESSION PLUS EXPRESSION
+    (7) EXPRESSION -> . EXPRESSION MINUS EXPRESSION
+    (8) EXPRESSION -> . EXPRESSION ASSIGN EXPRESSION
+
+    INT             shift and go to state 3
+    FLOAT           shift and go to state 4
+    ID              shift and go to state 5
+
+    EXPRESSION                     shift and go to state 6
+
+state 2
+
+    (2) PROGRAM -> EXPRESSION .
+    (6) EXPRESSION -> EXPRESSION . PLUS EXPRESSION
+    (7) EXPRESSION -> EXPRESSION . MINUS EXPRESSION
+    (8) EXPRESSION -> EXPRESSION . ASSIGN EXPRESSION
+
+    INT             reduce using rule 2 (PROGRAM -> EXPRESSION .)
+    FLOAT           reduce using rule 2 (PROGRAM -> EXPRESSION .)
+    ID              reduce using rule 2 (PROGRAM -> EXPRESSION .)
+    $end            reduce using rule 2 (PROGRAM -> EXPRESSION .)
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 8
+    ASSIGN          shift and go to state 9
+
+
+state 3
+
+    (3) EXPRESSION -> INT .
+
+    PLUS            reduce using rule 3 (EXPRESSION -> INT .)
+    MINUS           reduce using rule 3 (EXPRESSION -> INT .)
+    ASSIGN          reduce using rule 3 (EXPRESSION -> INT .)
+    INT             reduce using rule 3 (EXPRESSION -> INT .)
+    FLOAT           reduce using rule 3 (EXPRESSION -> INT .)
+    ID              reduce using rule 3 (EXPRESSION -> INT .)
+    $end            reduce using rule 3 (EXPRESSION -> INT .)
+
+
+state 4
+
+    (4) EXPRESSION -> FLOAT .
+
+    PLUS            reduce using rule 4 (EXPRESSION -> FLOAT .)
+    MINUS           reduce using rule 4 (EXPRESSION -> FLOAT .)
+    ASSIGN          reduce using rule 4 (EXPRESSION -> FLOAT .)
+    INT             reduce using rule 4 (EXPRESSION -> FLOAT .)
+    FLOAT           reduce using rule 4 (EXPRESSION -> FLOAT .)
+    ID              reduce using rule 4 (EXPRESSION -> FLOAT .)
+    $end            reduce using rule 4 (EXPRESSION -> FLOAT .)
+
+
+state 5
+
+    (5) EXPRESSION -> ID .
+
+    PLUS            reduce using rule 5 (EXPRESSION -> ID .)
+    MINUS           reduce using rule 5 (EXPRESSION -> ID .)
+    ASSIGN          reduce using rule 5 (EXPRESSION -> ID .)
+    INT             reduce using rule 5 (EXPRESSION -> ID .)
+    FLOAT           reduce using rule 5 (EXPRESSION -> ID .)
+    ID              reduce using rule 5 (EXPRESSION -> ID .)
+    $end            reduce using rule 5 (EXPRESSION -> ID .)
+
+
+state 6
+
+    (1) PROGRAM -> PROGRAM EXPRESSION .
+    (6) EXPRESSION -> EXPRESSION . PLUS EXPRESSION
+    (7) EXPRESSION -> EXPRESSION . MINUS EXPRESSION
+    (8) EXPRESSION -> EXPRESSION . ASSIGN EXPRESSION
+
+    INT             reduce using rule 1 (PROGRAM -> PROGRAM EXPRESSION .)
+    FLOAT           reduce using rule 1 (PROGRAM -> PROGRAM EXPRESSION .)
+    ID              reduce using rule 1 (PROGRAM -> PROGRAM EXPRESSION .)
+    $end            reduce using rule 1 (PROGRAM -> PROGRAM EXPRESSION .)
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 8
+    ASSIGN          shift and go to state 9
+
+
+state 7
+
+    (6) EXPRESSION -> EXPRESSION PLUS . EXPRESSION
+    (3) EXPRESSION -> . INT
+    (4) EXPRESSION -> . FLOAT
+    (5) EXPRESSION -> . ID
+    (6) EXPRESSION -> . EXPRESSION PLUS EXPRESSION
+    (7) EXPRESSION -> . EXPRESSION MINUS EXPRESSION
+    (8) EXPRESSION -> . EXPRESSION ASSIGN EXPRESSION
+
+    INT             shift and go to state 3
+    FLOAT           shift and go to state 4
+    ID              shift and go to state 5
+
+    EXPRESSION                     shift and go to state 10
+
+state 8
+
+    (7) EXPRESSION -> EXPRESSION MINUS . EXPRESSION
+    (3) EXPRESSION -> . INT
+    (4) EXPRESSION -> . FLOAT
+    (5) EXPRESSION -> . ID
+    (6) EXPRESSION -> . EXPRESSION PLUS EXPRESSION
+    (7) EXPRESSION -> . EXPRESSION MINUS EXPRESSION
+    (8) EXPRESSION -> . EXPRESSION ASSIGN EXPRESSION
+
+    INT             shift and go to state 3
+    FLOAT           shift and go to state 4
+    ID              shift and go to state 5
+
+    EXPRESSION                     shift and go to state 11
+
+state 9
+
+    (8) EXPRESSION -> EXPRESSION ASSIGN . EXPRESSION
+    (3) EXPRESSION -> . INT
+    (4) EXPRESSION -> . FLOAT
+    (5) EXPRESSION -> . ID
+    (6) EXPRESSION -> . EXPRESSION PLUS EXPRESSION
+    (7) EXPRESSION -> . EXPRESSION MINUS EXPRESSION
+    (8) EXPRESSION -> . EXPRESSION ASSIGN EXPRESSION
+
+    INT             shift and go to state 3
+    FLOAT           shift and go to state 4
+    ID              shift and go to state 5
+
+    EXPRESSION                     shift and go to state 12
+
+state 10
+
+    (6) EXPRESSION -> EXPRESSION PLUS EXPRESSION .
+    (6) EXPRESSION -> EXPRESSION . PLUS EXPRESSION
+    (7) EXPRESSION -> EXPRESSION . MINUS EXPRESSION
+    (8) EXPRESSION -> EXPRESSION . ASSIGN EXPRESSION
+
+    PLUS            reduce using rule 6 (EXPRESSION -> EXPRESSION PLUS EXPRESSION .)
+    MINUS           reduce using rule 6 (EXPRESSION -> EXPRESSION PLUS EXPRESSION .)
+    ASSIGN          reduce using rule 6 (EXPRESSION -> EXPRESSION PLUS EXPRESSION .)
+    INT             reduce using rule 6 (EXPRESSION -> EXPRESSION PLUS EXPRESSION .)
+    FLOAT           reduce using rule 6 (EXPRESSION -> EXPRESSION PLUS EXPRESSION .)
+    ID              reduce using rule 6 (EXPRESSION -> EXPRESSION PLUS EXPRESSION .)
+    $end            reduce using rule 6 (EXPRESSION -> EXPRESSION PLUS EXPRESSION .)
+
+  ! PLUS            [ shift and go to state 7 ]
+  ! MINUS           [ shift and go to state 8 ]
+  ! ASSIGN          [ shift and go to state 9 ]
+
+
+state 11
+
+    (7) EXPRESSION -> EXPRESSION MINUS EXPRESSION .
+    (6) EXPRESSION -> EXPRESSION . PLUS EXPRESSION
+    (7) EXPRESSION -> EXPRESSION . MINUS EXPRESSION
+    (8) EXPRESSION -> EXPRESSION . ASSIGN EXPRESSION
+
+    PLUS            reduce using rule 7 (EXPRESSION -> EXPRESSION MINUS EXPRESSION .)
+    MINUS           reduce using rule 7 (EXPRESSION -> EXPRESSION MINUS EXPRESSION .)
+    ASSIGN          reduce using rule 7 (EXPRESSION -> EXPRESSION MINUS EXPRESSION .)
+    INT             reduce using rule 7 (EXPRESSION -> EXPRESSION MINUS EXPRESSION .)
+    FLOAT           reduce using rule 7 (EXPRESSION -> EXPRESSION MINUS EXPRESSION .)
+    ID              reduce using rule 7 (EXPRESSION -> EXPRESSION MINUS EXPRESSION .)
+    $end            reduce using rule 7 (EXPRESSION -> EXPRESSION MINUS EXPRESSION .)
+
+  ! PLUS            [ shift and go to state 7 ]
+  ! MINUS           [ shift and go to state 8 ]
+  ! ASSIGN          [ shift and go to state 9 ]
+
+
+state 12
+
+    (8) EXPRESSION -> EXPRESSION ASSIGN EXPRESSION .
+    (6) EXPRESSION -> EXPRESSION . PLUS EXPRESSION
+    (7) EXPRESSION -> EXPRESSION . MINUS EXPRESSION
+    (8) EXPRESSION -> EXPRESSION . ASSIGN EXPRESSION
+
+    INT             reduce using rule 8 (EXPRESSION -> EXPRESSION ASSIGN EXPRESSION .)
+    FLOAT           reduce using rule 8 (EXPRESSION -> EXPRESSION ASSIGN EXPRESSION .)
+    ID              reduce using rule 8 (EXPRESSION -> EXPRESSION ASSIGN EXPRESSION .)
+    $end            reduce using rule 8 (EXPRESSION -> EXPRESSION ASSIGN EXPRESSION .)
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 8
+    ASSIGN          shift and go to state 9
+
+  ! PLUS            [ reduce using rule 8 (EXPRESSION -> EXPRESSION ASSIGN EXPRESSION .) ]
+  ! MINUS           [ reduce using rule 8 (EXPRESSION -> EXPRESSION ASSIGN EXPRESSION .) ]
+  ! ASSIGN          [ reduce using rule 8 (EXPRESSION -> EXPRESSION ASSIGN EXPRESSION .) ]
+
