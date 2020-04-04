@@ -28,8 +28,8 @@ del _lr_goto_items
 _lr_productions = [
   ("S' -> PROGRAM","S'",1,None,None,None),
   ('PROGRAM -> CODE_BLOCK','PROGRAM',1,'p_program','Mparser.py',29),
-  ('CODE_BLOCK -> CODE_BLOCK LBRACE CODE_BLOCK RBRACE','CODE_BLOCK',4,'p_code_block_curly','Mparser.py',34),
-  ('CODE_BLOCK -> LBRACE CODE_BLOCK RBRACE','CODE_BLOCK',3,'p_code_block_curly','Mparser.py',35),
+  ('CODE_BLOCK -> CODE_BLOCK LBRACE CODE_BLOCK RBRACE','CODE_BLOCK',4,'p_code_block_braces','Mparser.py',34),
+  ('CODE_BLOCK -> LBRACE CODE_BLOCK RBRACE','CODE_BLOCK',3,'p_code_block_braces','Mparser.py',35),
   ('CODE_BLOCK -> CODE_BLOCK instruction','CODE_BLOCK',2,'p_code_block','Mparser.py',45),
   ('CODE_BLOCK -> instruction','CODE_BLOCK',1,'p_code_block','Mparser.py',46),
   ('instruction -> statement SEMICOLON','instruction',2,'p_instruction','Mparser.py',56),

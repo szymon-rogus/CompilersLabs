@@ -16,7 +16,7 @@ class UnaryExpression:
 
     def __repr__(self):
         order = [self.operator, self.operand] if self.left else [self.operand, self.operator]
-        return '{}{}'.format(*order)
+        return '{}{}'.format(order[0], order[1])
 
 
 class Negation(UnaryExpression):
@@ -34,7 +34,7 @@ class Assignment(BinaryExpression):
 
 
 class Function:
-    def __init__(self, name, argument, ):
+    def __init__(self, name, argument):
         self.name = name
         self.argument = argument
 
@@ -164,22 +164,12 @@ class Matrix:
     def __repr__(self):
         return str(self.rows)
 
-    def has_correct_dims(self):
-        sizes = list(map(len, self.rows))
-        return not sizes or sizes.count(sizes[0]) == len(sizes)
-
-    def dims_compatible(self, other):
-        if type(other) is not Matrix:
-            return False
-        return self.dims == other.dims
-
-
 class Value:
-    def __init__(self, primitive):
-        self.primitive = primitive
+    def __init__(self, val):
+        self.val = val
 
     def __repr__(self):
-        return "{}({})".format(type(self.primitive).__name__, self.primitive)
+        return "{}({})".format(type(self.val).__name__, self.val)
 
 
 class Rows:
@@ -201,7 +191,7 @@ class Sequence:
         self.expressions = [expression]
 
     def __repr__(self):
-        return "{}".format(self.expressions)
+        return "[" + ", ".join(map(str, self.expressions)) + "]"
 
     def __len__(self):
         return len(self.expressions)

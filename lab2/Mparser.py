@@ -29,7 +29,7 @@ class Parser:
         """PROGRAM : CODE_BLOCK"""
         p[0] = types.Program(p[1])
 
-    def p_code_block_curly(self, p):
+    def p_code_block_braces(self, p):
         """
         CODE_BLOCK : CODE_BLOCK LBRACE CODE_BLOCK RBRACE
               | LBRACE CODE_BLOCK RBRACE
