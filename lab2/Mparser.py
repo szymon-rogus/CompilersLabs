@@ -23,13 +23,16 @@ def p_error(p):
         print("Unexpected end of input")
 
 def p_expression_relational(p):
-    """ comparison_operator : LESS
-                            | MORE
-                            | EQUAL
-                            | INEQUAL
-                            | LESSEQUAL
-                            | MOREEQUAL"""
+    """ comparison_operator : LESSER
+                            | GREATER
+                            | LESSER_EQUALS
+                            | GREATER_EQUALS
+                            | NOT_EQUALS
+                            | EQUALS"""
     p[0] = p[1]
+
+#def p_unary_negation(p):
+    """unary_negation : """
 
 
 
