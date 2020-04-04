@@ -1,5 +1,6 @@
 import ply.yacc as yacc
 import scanner
+import numpy
 
 tokens = scanner.tokens
 
@@ -12,6 +13,7 @@ precedence = (
     ("left", 'TIMES', 'DIVIDE'),
     ("left", 'MTIMES', 'MDIVIDE'),
     ("right", 'UMINUS'),
+    ("nonassoc", 'TRANSPOSITION')
     # to fill ...
 )
 
@@ -105,6 +107,9 @@ def p_unary_negation(p):
     """EXPRESSION : MINUS EXPRESSION %prec UMINUS"""
     p[0] = -p[2]
 
+def p_matrix_transpose(p):
+    """ EXPRESSION : EXPRESSION TRANSPOSITION """
+    p[0] = p[2].transpose(1, 0)
 
 def p_error(p):
     if p:
