@@ -26,6 +26,10 @@ def p_program(p):
     """PROGRAM : EXPRESSION"""
     print("RESULT =", p[1])
 
+def p_expression_brackets(p):
+    """EXPRESSION : LBRACKET EXPRESSION RBRACKET"""
+    p[0] = p[2]
+
 
 def p_expression_number(p):
     """EXPRESSION : INT
@@ -52,6 +56,14 @@ def p_expression_sum(p):
     elif p[2] == '-':
         p[0] = p[1] - p[3]
 
+
+def p_expression_mul(p):
+    """EXPRESSION : EXPRESSION TIMES EXPRESSION
+                  | EXPRESSION DIVIDE EXPRESSION"""
+    if p[2] == '*':
+        p[0] = p[1] * p[3]
+    elif p[2] == '/':
+        p[0] = p[1] / p[3]
 
 def p_expression_assignment(p):
     """EXPRESSION : EXPRESSION ASSIGN EXPRESSION"""

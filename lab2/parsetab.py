@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'rightASSIGNleftPLUSMINUSleftTIMESDIVIDEADD_ASSIGN ASSIGN BREAK COMMA COMMENT CONTINUE DIVIDE DIVIDE_ASSIGN ELSE EQUALS EYE FLOAT FOR GREATER GREATER_EQUALS ID IF INT LBRACE LBRACKET LESSER LESSER_EQUALS LSQUARE MDIVIDE MINUS MMINUS MPLUS MTIMES MULTIPLY_ASSIGN NOT_EQUALS ONES PLUS PRINT RANGE RBRACE RBRACKET RETURN RSQUARE SEMICOLON STRING SUBSTRACT_ASSIGN THEN TIMES TRANSPOSITION WHILE ZEROSPROGRAM : PROGRAM EXPRESSION\n               | EXPRESSIONEXPRESSION : INT\n                  | FLOATEXPRESSION : IDEXPRESSION : EXPRESSION PLUS EXPRESSION\n                  | EXPRESSION MINUS EXPRESSIONEXPRESSION : EXPRESSION ASSIGN EXPRESSION'
+_lr_signature = 'rightASSIGNleftPLUSMINUSleftTIMESDIVIDEADD_ASSIGN ASSIGN BREAK COMMA COMMENT CONTINUE DIVIDE DIVIDE_ASSIGN ELSE EQUALS EYE FLOAT FOR GREATER GREATER_EQUALS ID IF INT LBRACE LBRACKET LESSER LESSER_EQUALS LSQUARE MDIVIDE MINUS MMINUS MPLUS MTIMES MULTIPLY_ASSIGN NOT_EQUALS ONES PLUS PRINT RANGE RBRACE RBRACKET RETURN RSQUARE SEMICOLON STRING SUBSTRACT_ASSIGN THEN TIMES TRANSPOSITION WHILE ZEROSPROGRAM : EXPRESSIONEXPRESSION : LBRACKET EXPRESSION RBRACKETEXPRESSION : INT\n                  | FLOATEXPRESSION : IDEXPRESSION : EXPRESSION PLUS EXPRESSION\n                  | EXPRESSION MINUS EXPRESSIONEXPRESSION : EXPRESSION TIMES EXPRESSION\n                  | EXPRESSION DIVIDE EXPRESSIONEXPRESSION : EXPRESSION ASSIGN EXPRESSION'
     
-_lr_action_items = {'INT':([0,1,2,3,4,5,6,7,8,9,10,11,12,],[3,3,-2,-3,-4,-5,-1,3,3,3,-6,-7,-8,]),'FLOAT':([0,1,2,3,4,5,6,7,8,9,10,11,12,],[4,4,-2,-3,-4,-5,-1,4,4,4,-6,-7,-8,]),'ID':([0,1,2,3,4,5,6,7,8,9,10,11,12,],[5,5,-2,-3,-4,-5,-1,5,5,5,-6,-7,-8,]),'$end':([1,2,3,4,5,6,10,11,12,],[0,-2,-3,-4,-5,-1,-6,-7,-8,]),'PLUS':([2,3,4,5,6,10,11,12,],[7,-3,-4,-5,7,-6,-7,7,]),'MINUS':([2,3,4,5,6,10,11,12,],[8,-3,-4,-5,8,-6,-7,8,]),'ASSIGN':([2,3,4,5,6,10,11,12,],[9,-3,-4,-5,9,-6,-7,9,]),}
+_lr_action_items = {'LBRACKET':([0,3,7,8,9,10,11,],[3,3,3,3,3,3,3,]),'INT':([0,3,7,8,9,10,11,],[4,4,4,4,4,4,4,]),'FLOAT':([0,3,7,8,9,10,11,],[5,5,5,5,5,5,5,]),'ID':([0,3,7,8,9,10,11,],[6,6,6,6,6,6,6,]),'$end':([1,2,4,5,6,13,14,15,16,17,18,],[0,-1,-3,-4,-5,-6,-7,-8,-9,-10,-2,]),'PLUS':([2,4,5,6,12,13,14,15,16,17,18,],[7,-3,-4,-5,7,-6,-7,-8,-9,7,-2,]),'MINUS':([2,4,5,6,12,13,14,15,16,17,18,],[8,-3,-4,-5,8,-6,-7,-8,-9,8,-2,]),'TIMES':([2,4,5,6,12,13,14,15,16,17,18,],[9,-3,-4,-5,9,9,9,-8,-9,9,-2,]),'DIVIDE':([2,4,5,6,12,13,14,15,16,17,18,],[10,-3,-4,-5,10,10,10,-8,-9,10,-2,]),'ASSIGN':([2,4,5,6,12,13,14,15,16,17,18,],[11,-3,-4,-5,11,-6,-7,-8,-9,11,-2,]),'RBRACKET':([4,5,6,12,13,14,15,16,17,18,],[-3,-4,-5,18,-6,-7,-8,-9,-10,-2,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'PROGRAM':([0,],[1,]),'EXPRESSION':([0,1,7,8,9,],[2,6,10,11,12,]),}
+_lr_goto_items = {'PROGRAM':([0,],[1,]),'EXPRESSION':([0,3,7,8,9,10,11,],[2,12,13,14,15,16,17,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,12 +27,14 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> PROGRAM","S'",1,None,None,None),
-  ('PROGRAM -> PROGRAM EXPRESSION','PROGRAM',2,'p_program','Mparser.py',26),
-  ('PROGRAM -> EXPRESSION','PROGRAM',1,'p_program','Mparser.py',27),
-  ('EXPRESSION -> INT','EXPRESSION',1,'p_expression_number','Mparser.py',32),
-  ('EXPRESSION -> FLOAT','EXPRESSION',1,'p_expression_number','Mparser.py',33),
-  ('EXPRESSION -> ID','EXPRESSION',1,'p_expression_id','Mparser.py',38),
-  ('EXPRESSION -> EXPRESSION PLUS EXPRESSION','EXPRESSION',3,'p_expression_sum','Mparser.py',49),
-  ('EXPRESSION -> EXPRESSION MINUS EXPRESSION','EXPRESSION',3,'p_expression_sum','Mparser.py',50),
-  ('EXPRESSION -> EXPRESSION ASSIGN EXPRESSION','EXPRESSION',3,'p_expression_assignment','Mparser.py',58),
+  ('PROGRAM -> EXPRESSION','PROGRAM',1,'p_program','Mparser.py',26),
+  ('EXPRESSION -> LBRACKET EXPRESSION RBRACKET','EXPRESSION',3,'p_expression_brackets','Mparser.py',30),
+  ('EXPRESSION -> INT','EXPRESSION',1,'p_expression_number','Mparser.py',35),
+  ('EXPRESSION -> FLOAT','EXPRESSION',1,'p_expression_number','Mparser.py',36),
+  ('EXPRESSION -> ID','EXPRESSION',1,'p_expression_id','Mparser.py',41),
+  ('EXPRESSION -> EXPRESSION PLUS EXPRESSION','EXPRESSION',3,'p_expression_sum','Mparser.py',52),
+  ('EXPRESSION -> EXPRESSION MINUS EXPRESSION','EXPRESSION',3,'p_expression_sum','Mparser.py',53),
+  ('EXPRESSION -> EXPRESSION TIMES EXPRESSION','EXPRESSION',3,'p_expression_mul','Mparser.py',61),
+  ('EXPRESSION -> EXPRESSION DIVIDE EXPRESSION','EXPRESSION',3,'p_expression_mul','Mparser.py',62),
+  ('EXPRESSION -> EXPRESSION ASSIGN EXPRESSION','EXPRESSION',3,'p_expression_assignment','Mparser.py',69),
 ]
