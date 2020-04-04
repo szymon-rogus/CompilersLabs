@@ -8,10 +8,10 @@ precedence = (
     ("nonassoc", 'LESSER', 'GREATER', 'LESSER_EQUALS', 'GREATER_EQUALS', 'NOT_EQUALS', 'EQUALS'),
     #("noassoc", 'MINUS'),
     ("right", 'ASSIGN', 'ADD_ASSIGN', 'SUBSTRACT_ASSIGN', 'MULTIPLY_ASSIGN', 'DIVIDE_ASSIGN'),
-    ("left", 'PLUS', 'MINUS'),
-    ("left", 'MPLUS', 'MMINUS'),
-    ("left", 'TIMES', 'DIVIDE'),
-    ("left", 'MTIMES', 'MDIVIDE'),
+    ("left", 'PLUS', 'MINUS', 'MPLUS', 'MMINUS'),
+    ("left", 'TIMES', 'DIVIDE', 'MTIMES', 'MDIVIDE'),
+    ("noassoc", 'ZEROS', 'ONES', 'EYE'),
+    ("noassoc", 'LBRACE', 'RBRACE', 'LBRACKET', 'RBRACKET')
     # to fill ...
 )
 
@@ -20,11 +20,6 @@ symbols_dict = {}
 def p_program(p):
     """PROGRAM : EXPRESSION"""
     print("RESULT =", p[1])
-
-
-def p_expression_brackets(p):
-    """EXPRESSION : LBRACKET EXPRESSION RBRACKET"""
-    p[0] = p[2]
 
 
 def p_expression_number(p):
@@ -68,7 +63,11 @@ def p_expression_mul(p):
         p[0] = p[1] * p[3]
     elif p[2] == '/':
         p[0] = p[1] / p[3]
-    #TODO macierze
+    elif p[2] == '.*':
+        pass
+    elif p[2] == './':
+        pass
+
 
 
 def p_expression_assignment(p):
@@ -112,6 +111,29 @@ def p_error(p):
         print("Syntax error at line %d: LexToken(%s, '%s')" % (p.lineno, p.type, p.value))
     else:
         print("Unexpected end of input")
+
+def p_expression_function(p):
+    """EXPRESSION : ZEROS EXPRESSION
+                  | ONES EXPRESSION
+                  | EYE EXPRESSION"""
+    if p[1] == 'zeros':
+        pass
+        # p[0] = zeros(p[2])
+    elif p[1] == 'ones':
+        pass
+        # p[0] = ones(p[2])
+    elif p[1] == 'eye':
+        pass
+        # p[0] = eye(p[2])
+
+
+def p_expression_brackets(p):
+    """EXPRESSION : LBRACKET EXPRESSION RBRACKET
+                  | EXPRESSION"""
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = p[2]
 
 
 # def p_instructions_1(p):
