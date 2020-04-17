@@ -24,10 +24,6 @@ class TreePrinter:
     @addToClass(AST.Node)
     def printTree(self, indent=0):
         return self.withoutLeaf(indent) if self.leaf is None else self.withLeaf(indent)
-        # if self.leaf is not None:
-        #     return self.withLeaf(indent)
-        # else:
-        #     return self.withoutLeaf(indent)
 
     @addToClass(AST.Node)
     def printChildren(self, children, indent):

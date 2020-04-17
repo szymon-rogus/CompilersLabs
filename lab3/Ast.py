@@ -62,29 +62,6 @@ class Variable(Node):
     def __repr__(self):
         return '{}'.format(self.name)
 
-# class ConditionalOperator(Node):
-#     def __init__(self, condition, body):
-#         self.condition = condition
-#         self.body = body
-#
-# class If(ConditionalOperator):
-#     def __init__(self, condition, expression, else_expression=None):
-#         super().__init__(condition, expression)
-#         self.else_expression = else_expression
-#
-#     def __repr__(self):
-#         representation = 'IF {} THEN {}'.format(self.condition, self.body)
-#         result = representation + ' ELSE {}'.format(self.body) if self.else_expression else representation
-#         return result
-#
-#
-# class While(ConditionalOperator):
-#     def __init__(self, condition, body):
-#         super().__init__(condition, body)
-#
-#     def __repr__(self):
-#         return 'WHILE {} DO {}'.format(self.condition, self.body)
-
 class If(Node):
     def __init__(self, condition, expression, else_expression=None):
         super().__init__(self.__class__, [condition, expression, else_expression], ["IF", "THEN", "ELSE"])
