@@ -1,4 +1,6 @@
 #!/usr/bin/python
+from symtable import Symbol
+
 
 class VariableSymbol(Symbol):
 
