@@ -1,3 +1,6 @@
+from enum import Enum
+
+
 class Node(object):
     def __init__(self, type, children=None, leaf=None):
         self.type = type
@@ -41,7 +44,13 @@ class Transposition(UnaryExpression):
 
 
 class Assignment(BinaryExpression):
-    pass
+    def __init__(self, id, value, lineno):
+        self.lineno = lineno
+        self.id = id
+        self.value = value
+
+    def __repr__(self):
+        return self.__str__()
 
 
 class Function(Node):
@@ -195,6 +204,7 @@ class Matrix(Node):
     def __repr__(self):
         return str(self.rows)
 
+
 class Value(Node):
     def __init__(self, val):
         super().__init__(self.__class__, [], val)
@@ -232,3 +242,26 @@ class Sequence(Node):
 
     def __getitem__(self, item):
         return self.expressions[item]
+
+
+class BinOperator(Enum):
+    ADD = '+'
+    SUB = '-'
+    MUL = '*'
+    DIV = '/'
+    ADDASSIGN = '+='
+    SUBASSIGN = '-='
+    MULASSIGN = '*='
+    DIVASSIGN = '/='
+    DOTADD = '.+'
+    DOTSUB = '.-'
+    DOTMUL = '.*'
+    DOTDIV = './'
+    EQ = '=='
+    NOTEQ = '!='
+    GT = '>'
+    LT = '<'
+    GTEQ = '>='
+    LTEQ = '<='
+    def __str__(self):
+        return self.value
