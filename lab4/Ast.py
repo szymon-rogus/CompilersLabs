@@ -44,10 +44,8 @@ class Transposition(UnaryExpression):
 
 
 class Assignment(BinaryExpression):
-    def __init__(self, id, value, lineno):
-        self.lineno = lineno
-        self.id = id
-        self.value = value
+    def __init__(self, left, operator, right):
+        super().__init__(left, operator, right)
 
     def __repr__(self):
         return self.__str__()
@@ -249,6 +247,7 @@ class BinOperator(Enum):
     SUB = '-'
     MUL = '*'
     DIV = '/'
+    ASSIGN = '='
     ADDASSIGN = '+='
     SUBASSIGN = '-='
     MULASSIGN = '*='

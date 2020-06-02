@@ -82,7 +82,8 @@ class TypeChecker(NodeVisitor):
                 BinOperator.ADDASSIGN, BinOperator.SUBASSIGN, BinOperator.MULASSIGN, BinOperator.DIVASSIGN]
 
     def assign_operators(self):
-        return [BinOperator.ADDASSIGN, BinOperator.SUBASSIGN, BinOperator.MULASSIGN, BinOperator.DIVASSIGN]
+        return [BinOperator.ASSIGN, BinOperator.ADDASSIGN, BinOperator.SUBASSIGN, BinOperator.MULASSIGN,
+                BinOperator.DIVASSIGN]
 
     def check_boolean_operation(self, op, arg1, arg2):
         if isinstance(arg1, Scalar) and isinstance(arg2, Scalar):
@@ -177,17 +178,12 @@ class TypeChecker(NodeVisitor):
         else:
             return Failure(self.errors, self.warns)
 
-    def visit_BinOperation(self, node):
+    def visit_BinaryExpression(self, node):
         if self.assign_operators().__contains__(node.operator):
-            desugarized = Ast.Assignment(node.leftOperand, Ast.BinaryExpression(node.leftOperand,
-                                                                            self.assign_dict_operation()[
-                                                                                node.operator],
-                                                                            node.rightOperand),
-                                         node.lineno)
-            return self.visit(desugarized)
+            return self.visit(node)
         else:
-            type1 = self.visit(node.leftOperand)
-            type2 = self.visit(node.rightOperand)
+            type1 = self.visit(node.left)
+            type2 = self.visit(node.right)
             op = node.operator
             res_type = self.getTypeOfBinOp(op, type1, type2)
             if res_type is None and type1 is not None and type2 is not None:
@@ -197,17 +193,17 @@ class TypeChecker(NodeVisitor):
                 return res_type
 
     def visit_Assignment(self, node):
-        if isinstance(node.id, Ast.Variable):
-            id = node.id
+        if isinstance(node.left, Ast.Variable):
+            id = node.left
             v_type = self.symbolTable.getType(id)
-            type = self.visit(node.value)
+            type = self.visit(node.right)
             if type == Range():
                 type = Integer()
             self.symbolTable.put(VariableSymbol(id, type))
             return type
         else:
-            v_type = self.visit(node.id)
-            type = self.visit(node.value)
+            v_type = self.visit(node.left)
+            type = self.visit(node.right)
             if type == Range():
                 type = Integer()
             if not isinstance(type, Scalar):
@@ -218,21 +214,21 @@ class TypeChecker(NodeVisitor):
     def visit_Variable(self, node):
         v = self.symbolTable.get(node.name)
         if v is None:
-            self.error(fstring("Call to variable {node.name} before assignment"))
+            self.error(fstring("variable {node.name} before assignment"))
         else:
             return v.type
 
     def visit_If(self, node):
-        c_type = self.visit(node.cond)
+        c_type = self.visit(node.condition)
         self.new_scope()
-        s_type = self.visit(node.statements)
-        if self.is_expressions(type(node.statements), node.statements) and s_type is not None:
+        s_type = self.visit(node.expression)
+        if self.is_expressions(type(node.expression), node.expression) and s_type is not None:
             self.warn(fstring("Unused expression of type {s_type}"))
         self.pop_scope()
-        if node.elses:
+        if node.else_expression:
             self.new_scope()
-            e_type = self.visit(node.elses)
-            if self.is_expressions(type(node.elses), node.elses) and e_type is not None:
+            e_type = self.visit(node.else_expression)
+            if self.is_expressions(type(node.else_expression), node.else_expression) and e_type is not None:
                 self.warn(fstring("Unused expression of type {e_type}"))
             self.pop_scope()
         if c_type != Boolean() and c_type is not None:
@@ -241,9 +237,9 @@ class TypeChecker(NodeVisitor):
     def visit_While(self, node):
         self.loopsCount += 1
         self.new_scope()
-        c_type = self.visit(node.cond)
-        s_type = self.visit(node.statements)
-        if self.is_expressions(type(node.statements), node.statements) and s_type is not None:
+        c_type = self.visit(node.condition)
+        s_type = self.visit(node.body)
+        if self.is_expressions(type(node.body), node.body) and s_type is not None:
             self.warn(fstring("Unused expression of type {s_type}"))
         self.pop_scope()
         self.loopsCount -= 1
@@ -253,9 +249,8 @@ class TypeChecker(NodeVisitor):
     def visit_For(self, node):
         self.loopsCount += 1
         self.new_scope()
-        a_type = self.visit(node.assignment)
-        s_type = self.visit(node.statements)
-        if self.is_expressions(type(node.statements), node.statements) and s_type is not None:
+        s_type = self.visit(node.body)
+        if self.is_expressions(type(node.body), node.body) and s_type is not None:
             self.warn(fstring("Unused expression of type {s_type}"))
         self.pop_scope()
         self.loopsCount -= 1
