@@ -54,13 +54,6 @@ class TypeChecker(NodeVisitor):
         self.errors = 0
         self.warns = 0
 
-    def assign_dict_operation(self):
-        return {
-            BinOperator.ADDASSIGN: BinOperator.ADD,
-            BinOperator.SUBASSIGN: BinOperator.SUB,
-            BinOperator.MULASSIGN: BinOperator.MUL,
-            BinOperator.DIVASSIGN: BinOperator.DIV
-        }
 
     def getTypeOfBinOp(self, op, arg1, arg2):
         if self.boolean_operators().__contains__(op):
