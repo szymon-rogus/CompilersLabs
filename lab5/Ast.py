@@ -9,6 +9,21 @@ class Node(object):
         else:
             self.children = []
 
+    def accept(self, visitor):
+        return visitor.visit(self)
+
+
+class Root(Node):
+    def __init__(self, children):
+        self.children = children
+
+    def __str__(self):
+        return str(self.children)
+
+    def __repr__(self):
+        return self.__str__()
+
+
 class BinaryExpression(Node):
     def __init__(self, left, operator, right):
         super().__init__(self.__class__, [left, right], operator)
